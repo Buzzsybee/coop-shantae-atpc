@@ -1,16 +1,16 @@
--- name: Shantae and Bowser's Curse
+-- name: [CS] Shantae (Pirates Curse)
 -- description: Shantae and the pirates curse moveset cuz why not :3
 
-local TEXT_MOD_NAME = "Shantae"
+local TEXT_MOD_NAME = "Shantae and Bowser's Curse"
 
-if not _G.charSelectExists then
+if not charSelectExists then
     djui_popup_create("\\#ffffdc\\\n"..TEXT_MOD_NAME.."\nRequires the Character Select Mod\nto use as a Library!\n\nPlease turn on the Character Select Mod\nand Restart the Room!", 6)
     return 0
 end
 
-local E_MODEL_CHAR = smlua_model_util_get_id("CHAR_geo")
-local ICON_CHAR= get_texture_info("CHAR_icon")
-local CHAR_GRAFFITI = get_texture_info("CHAR_graffiti")
+local E_MODEL_CHAR = smlua_model_util_get_id("shante_geo")
+local ICON_CHAR= get_texture_info("char_icon")
+local CHAR_GRAFFITI = get_texture_info("char_graffiti")
 
 local PALETTE_CHAR = {
     [PANTS]  = "FFFFFF",
@@ -27,19 +27,30 @@ anims = {
     [charSelect.CS_ANIM_MENU] = 'CHAR_MENU_ANIM'
 }
 
-_G.charSelect.character_add_palette_preset(E_MODEL_CHAR, PALETTE_CHAR)
+charSelect.character_add_palette_preset(E_MODEL_CHAR, PALETTE_CHAR)
 
 
-CHAR_CHAR = _G.charSelect.character_add(
+CT_SHANTE = charSelect.character_add(
     "Shantae", -- Character Name
     "Shantae and the pirates curse moveset cuz why not :3", -- Description
     "Honi", -- Credits
     "FFFFFF",           -- Menu Color
     E_MODEL_CHAR,       -- Character Model
-    CT_MARIO,           -- Override Character
+    CT_WALUIGI,           -- Override Character
     ICON_CHAR, -- Life Icon
-    1.0
+    1.5
 )
 
-if anims then charSelect.character_add_animations(E_MODEL_CHAR, anims) end
---charSelect.character_add_graffiti(CHAR_CHAR, CHAR_GRAFFITI)
+local function before_shante_action(m, a)
+    if a == ACT_DOUBLE_JUMP or a == ACT_TRIPLE_JUMP or a == ACT_LONG_JUMP then
+        return ACT_JUMP
+    end
+    if a == (ACT_WALL_KICK_AIR) and m.prevAction ~= ACT_HOLDING_POLE  and m.prevAction ~= ACT_CLIMBING_POLE then
+        m.faceAngle.y = m.faceAngle.y + 0x8000
+        return ACT_BACKWARD_AIR_KB
+    end
+    if a == ACT_DIVE then
+        return ACT_JUMP_KICK
+    end
+end
+charSelect.character_hook_moveset(CT_SHANTE, HOOK_BEFORE_SET_MARIO_ACTION, before_shante_action)
