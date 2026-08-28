@@ -10,7 +10,7 @@ end
 
 local E_MODEL_CHAR = smlua_model_util_get_id("shante_geo")
 local ICON_CHAR= get_texture_info("char_icon")
-local CHAR_GRAFFITI = get_texture_info("char_graffiti")
+--local CHAR_GRAFFITI = get_texture_info("char_graffiti")
 
 local PALETTE_CHAR = {
     [PANTS]  = "FFFFFF",
@@ -40,30 +40,3 @@ CT_SHANTE = charSelect.character_add(
     ICON_CHAR, -- Life Icon
     1.5
 )
-
----@param m MarioState
-local function shante_update(m)
-    if (m.controller.buttonPressed & X_BUTTON) ~= 0 and (m.action == ACT_JUMP or m.action == ACT_FREEFALL or m.action == ACT_WALL_KICK_AIR) then
-        m.vel.y = 35
-        set_mario_action(m, ACT_SHANTE_CANNONJUMP, 0)
-    end
-end
-hook_event(HOOK_MARIO_UPDATE, shante_update)
-
-local function before_shante_action(m, a)
-    if a == ACT_DOUBLE_JUMP or a == ACT_TRIPLE_JUMP or a == ACT_LONG_JUMP then
-        return ACT_JUMP
-    end
-    if a == (ACT_WALL_KICK_AIR) and m.prevAction ~= ACT_HOLDING_POLE  and m.prevAction ~= ACT_CLIMBING_POLE then
-        m.faceAngle.y = m.faceAngle.y + 0x8000
-        return ACT_BACKWARD_AIR_KB
-    end
-    if a == ACT_DIVE then
-        return ACT_JUMP_KICK
-    end
-    if a == ACT_AIR_HIT_WALL or a == ACT_SOFT_BONK then
-        m.forwardVel = -1
-        set_mario_action(m, ACT_FREEFALL, 0)
-    end
-end
-charSelect.character_hook_moveset(CT_SHANTE, HOOK_BEFORE_SET_MARIO_ACTION, before_shante_action)
