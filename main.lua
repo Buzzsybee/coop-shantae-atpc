@@ -36,7 +36,7 @@ CT_SHANTE = charSelect.character_add(
     "Honi", -- Credits
     "FFFFFF",           -- Menu Color
     E_MODEL_CHAR,       -- Character Model
-    CT_WALUIGI,           -- Override Character
+    CT_MARIO,           -- Override Character
     ICON_CHAR, -- Life Icon
     1.5
 )

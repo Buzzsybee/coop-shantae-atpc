@@ -17,7 +17,7 @@ end
 for i = 0, (MAX_PLAYERS - 1) do
     reset_shantae_states(i)
 end
-charSelect.character_hook_moveset(CT_SHANTE, HOOK_ON_LEVEL_INIT, reset_shantae_states)
+--charSelect.character_hook_moveset(CT_SHANTE, HOOK_ON_LEVEL_INIT, reset_shantae_states)
 
 ACT_SHANTE_CANNONJUMP = allocate_mario_action(ACT_FLAG_AIR | ACT_FLAG_ATTACKING)
 ACT_SHANTE_JUMP = allocate_mario_action(ACT_FLAG_AIR | ACT_FLAG_CONTROL_JUMP_HEIGHT)
@@ -105,6 +105,8 @@ local function before_shante_action(m, a)
 end
 charSelect.character_hook_moveset(CT_SHANTE, HOOK_BEFORE_SET_MARIO_ACTION, before_shante_action)
 
+---comment
+---@param m MarioState
 local function shante_update(m)
     local e = gShantaeStates[m.playerIndex]
 
