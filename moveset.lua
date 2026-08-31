@@ -30,7 +30,7 @@ local function act_shante_cannonjump(m)
     if m.actionTimer == 0 then
         m.faceAngle.y = m.intendedYaw
         set_mario_anim_with_accel(m, CHAR_ANIM_CRAWLING, 1.0)
-        m.vel.y = 50
+        m.vel.y = 20 * e.cannonJumpNumber
         
         m.particleFlags = m.particleFlags | PARTICLE_MIST_CIRCLE
         play_sound(SOUND_GENERAL2_BOBOMB_EXPLOSION, m.marioObj.header.gfx.cameraToObject)
@@ -98,7 +98,7 @@ local function act_shante_hat_glide(m)
         set_mario_action(m, ACT_JUMP_LAND, 0)
     end
 
-    if m.controller.buttonDown & X_BUTTON == 0 then
+    if (m.controller.buttonDown & X_BUTTON) == 0 then
         set_mario_action(m, ACT_FREEFALL, 0)
     end
 
@@ -114,7 +114,7 @@ local function  act_shante_scimitar_down(m)
     if m.actionTimer == 0 then
         set_mario_anim_with_accel(m, CHAR_ANIM_TWIRL, 0x10000)
         play_character_sound(m, CHAR_SOUND_WHOA)
-        m.vel.y = -30
+        m.vel.y = 50
     end
 
     local step = perform_air_step(m, 0)
@@ -134,6 +134,8 @@ local function  act_shante_scimitar_down(m)
     end
 
     m.actionTimer = m.actionTimer + 1
+
+    m.vel.y = m.vel.y - 1
     
     return false
 end
