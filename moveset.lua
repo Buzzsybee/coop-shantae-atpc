@@ -166,7 +166,7 @@ local function shante_update(m)
 
     if m.action & ACT_FLAG_AIR == 0 then e.cannonJumpNumber = 3 end
 
-    if m.action == ACT_FREEFALL then m.actionTimer = m.actionTimer + 1 
+    if m.action == ACT_SHANTE_JUMP then m.actionTimer = m.actionTimer + 1 
 
         if m.actionTimer > 15 then
             if (m.controller.buttonPressed & X_BUTTON) ~= 0 and m.action ~= ACT_SHANTE_HAT_GLIDE then
@@ -194,3 +194,14 @@ local function shante_update(m)
     end
 end
 charSelect.character_hook_moveset(CT_SHANTE, HOOK_MARIO_UPDATE, shante_update)
+
+---comment
+---@param m MarioState
+---@param o Object
+---@param type InteractionType
+local function shante_allow_interact(m, o, type)
+    if get_id_from_behavior(o.behavior) == id_bhvPoleGrabbing or get_id_from_behavior(o.behavior) == id_bhvGiantPole or get_id_from_behavior(o.behavior) == id_bhvTree then
+        return false
+    end
+end
+charSelect.character_hook_moveset(CT_SHANTE, HOOK_ALLOW_INTERACT, shante_allow_interact)
