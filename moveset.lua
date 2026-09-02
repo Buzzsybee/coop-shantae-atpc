@@ -30,7 +30,7 @@ local function act_shante_cannonjump(m)
     if m.actionTimer == 0 then
         m.faceAngle.y = m.intendedYaw
         set_mario_anim_with_accel(m, CHAR_ANIM_CRAWLING, 1.0)
-        m.vel.y = 20 * e.cannonJumpNumber
+        m.vel.y = 57 -- 20 * e.cannonJumpNumber -- i think the third jump doesnt really get u much higher, so i´d prefer a fixed jump height for each instead
         
         m.particleFlags = m.particleFlags | PARTICLE_MIST_CIRCLE
         play_sound(SOUND_GENERAL2_BOBOMB_EXPLOSION, m.marioObj.header.gfx.cameraToObject)
@@ -114,7 +114,7 @@ local function  act_shante_scimitar_down(m)
     if m.actionTimer == 0 then
         set_mario_anim_with_accel(m, CHAR_ANIM_TWIRL, 0x10000)
         play_character_sound(m, CHAR_SOUND_WHOA)
-        m.vel.y = 50
+        m.vel.y = 10
     end
 
     local step = perform_air_step(m, 0)
@@ -135,14 +135,14 @@ local function  act_shante_scimitar_down(m)
 
     m.actionTimer = m.actionTimer + 1
 
-    m.vel.y = m.vel.y - 1
+    m.vel.y = m.vel.y - 10 -- So she falls faster like intended :3
     
     return false
 end
 hook_mario_action(ACT_SHANTE_SCIMITAR_DOWN, {every_frame = act_shante_scimitar_down}, INT_GROUND_POUND)
 
 local function before_shante_action(m, a)
-    if a == ACT_JUMP or a == ACT_DOUBLE_JUMP or a == ACT_TRIPLE_JUMP or a == ACT_LONG_JUMP or a == ACT_SIDE_FLIP or a == ACT_BACKFLIP then
+    if a == ACT_JUMP or a == ACT_STEEP_JUMP or a == ACT_DOUBLE_JUMP or a == ACT_TRIPLE_JUMP or a == ACT_LONG_JUMP or a == ACT_SIDE_FLIP or a == ACT_BACKFLIP then
         return ACT_SHANTE_JUMP
     end
 
