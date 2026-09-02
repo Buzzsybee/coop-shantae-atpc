@@ -29,7 +29,8 @@ local function act_shante_cannonjump(m)
 
     if m.actionTimer == 0 then
         m.faceAngle.y = m.intendedYaw
-        set_mario_anim_with_accel(m, CHAR_ANIM_CRAWLING, 1.0)
+        set_mario_anim_with_accel(m, CHAR_ANIM_CRAWLING, 0x10000)
+        smlua_anim_util_set_animation(m.marioObj, 'SHANTE_CANNONJUMP')
         m.vel.y = 57 -- 20 * e.cannonJumpNumber -- i think the third jump doesnt really get u much higher, so i´d prefer a fixed jump height for each instead
         
         m.particleFlags = m.particleFlags | PARTICLE_MIST_CIRCLE
@@ -83,6 +84,7 @@ local function act_shante_hat_glide(m)
 
     if m.actionTimer == 0 then
         set_mario_anim_with_accel(m, CHAR_ANIM_HANG_ON_OWL, 0x10000)
+        smlua_anim_util_set_animation(m.marioObj, 'SHANTE_GLIDE')
         play_character_sound(m, CHAR_SOUND_WHOA)
         m.vel.y = 20
     end
@@ -113,6 +115,7 @@ local function  act_shante_scimitar_down(m)
 
     if m.actionTimer == 0 then
         set_mario_anim_with_accel(m, CHAR_ANIM_TWIRL, 0x10000)
+        smlua_anim_util_set_animation(m.marioObj, 'SHANTE_SCIMITAR')
         play_character_sound(m, CHAR_SOUND_WHOA)
         m.vel.y = 10
     end

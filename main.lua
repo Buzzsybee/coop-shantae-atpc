@@ -10,21 +10,21 @@ end
 
 local E_MODEL_CHAR = smlua_model_util_get_id("shante_geo")
 local ICON_CHAR= get_texture_info("char_icon")
---local CHAR_GRAFFITI = get_texture_info("char_graffiti")
+local CHAR_GRAFFITI = get_texture_info("char_graffiti")
 
 local PALETTE_CHAR = {
-    [PANTS]  = "FFFFFF",
-    [SHIRT]  = "FFFFFF",
-    [GLOVES] = "FFFFFF",
-    [SHOES]  = "FFFFFF",
-    [HAIR]   = "FFFFFF",
-    [SKIN]   = "FFFFFF",
-    [CAP]    = "FFFFFF",
-	[EMBLEM] = "FFFFFF"
+    [PANTS]  = "DE2A1B",
+    [SHIRT]  = "59507B",
+    [GLOVES] = "FCCE25",
+    [SHOES]  = "DE2A1B",
+    [HAIR]   = "B15CB2",
+    [SKIN]   = "EEA964",
+    [CAP]    = "FCCE25",
+	[EMBLEM] = "FCCE25"
 }
 
 anims = {
-    [charSelect.CS_ANIM_MENU] = 'CHAR_MENU_ANIM'
+    [charSelect.CS_ANIM_MENU] = 'SHANTE_CS_ANIM'
 }
 
 charSelect.character_add_palette_preset(E_MODEL_CHAR, PALETTE_CHAR)
@@ -38,5 +38,7 @@ CT_SHANTE = charSelect.character_add(
     E_MODEL_CHAR,       -- Character Model
     CT_MARIO,           -- Override Character
     ICON_CHAR, -- Life Icon
-    1.5
+    1
 )
+if anims then charSelect.character_add_animations(E_MODEL_CHAR, anims) end
+charSelect.character_add_graffiti(CT_SHANTE, CHAR_GRAFFITI)
